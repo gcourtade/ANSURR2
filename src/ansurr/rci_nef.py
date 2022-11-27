@@ -86,7 +86,7 @@ def is_tool(name):
 
     return which(name) is not None
 
-def calc_RCI(path_to_nef_file,output_dir='',panav=False,quiet=False):
+def calc_RCI(path_to_nef_file,output_dir='',path_to_java='',panav=False,quiet=False):
 
     entry = pynmrstar.Entry.from_file(path_to_nef_file)  # read NEF format
     
@@ -203,7 +203,7 @@ def calc_RCI(path_to_nef_file,output_dir='',panav=False,quiet=False):
             with resources.path("ansurr.bin", "PANAV.jar") as f: 
                 panav_file_path = f
 
-            run_panav = subprocess.run(["java", "-jar", panav_file_path, output_dir+'PANAV/'],stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
+            run_panav = subprocess.run([path_to_java, "-jar", panav_file_path, output_dir+'PANAV/'],stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
 
             if len(glob.glob(output_dir+'PANAV/*_forpanav.out_calibrated')) > 0:
                 for p in glob.glob(output_dir+'PANAV/*_forpanav.out_calibrated'):
